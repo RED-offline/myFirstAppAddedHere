@@ -6,7 +6,7 @@ import 'package:test_project/transaction.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
 
-  Chart(this.recentTransactions);
+  const Chart(this.recentTransactions, {super.key});
 
   List<Map<String, Object>?> get groupedTransactionValues {
     return List.generate(7, (index) {
@@ -38,6 +38,7 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).scaffoldBackgroundColor,
       elevation: 10,
       margin: const EdgeInsets.all(15),
       child: Padding(
@@ -62,5 +63,3 @@ class Chart extends StatelessWidget {
     );
   }
 }
-
-//commit

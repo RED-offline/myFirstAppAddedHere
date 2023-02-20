@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:test_project/chart.dart';
 import 'package:test_project/constants.dart';
@@ -5,7 +8,16 @@ import 'package:test_project/new_transaction.dart';
 import 'package:test_project/transaction.dart';
 import 'package:test_project/transaction_list.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const MyApp());
 }
 
@@ -18,9 +30,10 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expenses',
       theme: ThemeData(
         brightness: Brightness.dark,
+        // useMaterial3: true,
         // fontFamily: 'Quicksand',
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -33,6 +46,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool showChart = false;
+
   final List<Transaction> _userTransactions = [];
 
   List<Transaction> get _recentTransactions {
@@ -60,6 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
         context: ctx,
         builder: (_) {
           return NewTransaction(_addNewTx);
@@ -72,38 +90,76 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  final appBar = AppBar(
+    titleTextStyle: const TextStyle(
+      fontSize: 25,
+    ),
+    title: const Text('Personal Expenses'),
+  );
+
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        titleTextStyle: const TextStyle(
-          fontSize: 25,
-        ),
-        title: const Text('Personal Expenses'),
-        actions: [
-          IconButton(
-            onPressed: () => _startAddNewTransaction(context),
-            icon: const Icon(Icons.add),
-          ),
-        ],
+      appBar: appBar,
+      body: SafeArea(
+        child: isLandscape
+            ? Column(
+                children: [
+                  const Text('Show chart'),
+                  Switch.adaptive(
+                    value: showChart,
+                    onChanged: ((value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
+                  ),
+                  showChart
+                      ? Expanded(
+                          child: Center(child: Chart(_recentTransactions)))
+                      : Expanded(
+                          child: Center(
+                          child: TransactionList(
+                              _userTransactions, _deleteTransaction),
+                        )),
+                ],
+              )
+            : Column(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top) *
+                          0.33,
+                      child: Chart(_recentTransactions),
+                    ),
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top) *
+                          0.66,
+                      child: TransactionList(
+                          _userTransactions, _deleteTransaction),
+                    ),
+                  ),
+                ],
+              ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Chart(_recentTransactions),
-          ),
-          Expanded(
-            flex: 8,
-            child: TransactionList(_userTransactions, _deleteTransaction),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: accentColor,
-        onPressed: () => _startAddNewTransaction(context),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              backgroundColor: accentColor,
+              onPressed: () => _startAddNewTransaction(context),
+              child: const Icon(Icons.add),
+            ),
     );
   }
 }

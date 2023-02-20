@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>896411670124-09e3trbl58s6ohqgqj1epmpbnuh9bv5l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.896411670124-09e3trbl58s6ohqgqj1epmpbnuh9bv5l</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAj0nzVcQkpMxp--bUvEi4Pt4Y5l9bKHXA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>896411670124</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.expansesApp</string>
+	<key>PROJECT_ID</key>
+	<string>expanses-app-1488</string>
+	<key>STORAGE_BUCKET</key>
+	<string>expanses-app-1488.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:896411670124:ios:e0cdac26ab6be93ba7aa49</string>
+</dict>
+</plist>
