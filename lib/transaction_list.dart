@@ -15,10 +15,16 @@ class TransactionList extends StatelessWidget {
     return transactions.isEmpty
         ? Column(
             children: [
-              Expanded(flex: 7, child: Image.asset('images/nothing.png')),
+              Expanded(
+                flex: 7,
+                child: Image.asset('images/nothing.png'),
+              ),
               const Expanded(
                 flex: 2,
-                child: Text('Nothing to see here, try to add new transaction!'),
+                child: Text(
+                  'Nothing to see here, try to add new transaction!',
+                  style: bodyTextStyle,
+                ),
               ),
             ],
           )

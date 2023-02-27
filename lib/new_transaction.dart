@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:test_project/constants.dart';
+
+import 'package:test_project/adaptive_flat_button.dart';
+import 'adaptive_elevated_button.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction(this.addNewTransaction, {super.key});
@@ -89,12 +91,8 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: TextButton(
+                    child: AdaptiveFlatButton(
                       onPressed: _showDatePicker,
-                      style: TextButton.styleFrom(
-                        foregroundColor: accentColor,
-                      ),
-                      child: const Text('Chose date'),
                     ),
                   ),
                 ],
@@ -102,20 +100,8 @@ class _NewTransactionState extends State<NewTransaction> {
               const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: accentColor,
-                  ),
+                child: AdaptiveElevatedButton(
                   onPressed: _submitData,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Text(
-                      'Confirm',
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ],
